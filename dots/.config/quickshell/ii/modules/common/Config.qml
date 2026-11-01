@@ -212,6 +212,12 @@ Singleton {
                 }
                 property string wallpaperPath: ""
                 property string thumbnailPath: ""
+                property JsonObject autoRotate: JsonObject {
+                    property bool enable: false
+                    property int intervalMinutes: 30
+                    property string folder: "" // Empty: ~/Pictures/Wallpapers
+                    property bool shuffle: true // false: go through the folder in name order
+                }
                 property bool hideWhenFullscreen: true
                 property JsonObject parallax: JsonObject {
                     property bool vertical: false

@@ -228,6 +228,65 @@ ContentPage {
                 Config.options.appearance.transparency.enable = checked;
             }
         }
+
+        ContentSubsection {
+            title: Translation.tr("Auto-switch wallpaper")
+
+            ConfigRow {
+                uniform: true
+                ConfigSwitch {
+                    buttonIcon: "autorenew"
+                    text: Translation.tr("Enable")
+                    checked: Config.options.background.autoRotate.enable
+                    onCheckedChanged: {
+                        Config.options.background.autoRotate.enable = checked;
+                    }
+                }
+                ConfigSwitch {
+                    buttonIcon: "shuffle"
+                    text: Translation.tr("Shuffle")
+                    checked: Config.options.background.autoRotate.shuffle
+                    onCheckedChanged: {
+                        Config.options.background.autoRotate.shuffle = checked;
+                    }
+                    StyledToolTip {
+                        text: Translation.tr("Off: go through the folder in name order")
+                    }
+                }
+            }
+
+            ConfigSpinBox {
+                enabled: Config.options.background.autoRotate.enable
+                icon: "timer"
+                text: Translation.tr("Interval (minutes)")
+                value: Config.options.background.autoRotate.intervalMinutes
+                from: 1
+                to: 1440
+                stepSize: 5
+                onValueChanged: {
+                    Config.options.background.autoRotate.intervalMinutes = value;
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                MaterialTextArea {
+                    Layout.fillWidth: true
+                    placeholderText: Translation.tr("Folder (empty: %1)").arg(`${FileUtils.trimFileProtocol(Directories.pictures)}/Wallpapers`)
+                    text: Config.options.background.autoRotate.folder
+                    wrapMode: TextEdit.NoWrap
+                    onTextChanged: {
+                        Config.options.background.autoRotate.folder = text.trim();
+                    }
+                }
+                RippleButtonWithIcon {
+                    buttonRadius: Appearance.rounding.small
+                    materialIcon: "skip_next"
+                    mainText: Translation.tr("Next now")
+                    onClicked: WallpaperRotator.next()
+                }
+            }
+        }
     }
 
     ContentSection {
