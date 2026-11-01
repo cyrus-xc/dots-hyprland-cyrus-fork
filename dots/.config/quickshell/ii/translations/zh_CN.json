@@ -751,5 +751,13 @@
   "Off: go through the folder in name order": "关闭时按文件名顺序轮换",
   "Interval (minutes)": "间隔（分钟）",
   "Folder (empty: %1)": "文件夹（留空则为 %1）",
-  "Next now": "立即下一张"
+  "Next now": "立即下一张",
+  "Power:": "功耗：",
+  "Frequency:": "频率：",
+  "Temperature:": "温度：",
+  "VRAM:": "显存：",
+  "GPU clock:": "核心频率：",
+  "Memory clock:": "显存频率：",
+  "Not supported": "硬件不支持",
+  "Hardware metrics unavailable": "硬件监控暂不可用"
 }

@@ -642,5 +642,13 @@
   "Off: go through the folder in name order": "Off: go through the folder in name order",
   "Interval (minutes)": "Interval (minutes)",
   "Folder (empty: %1)": "Folder (empty: %1)",
-  "Next now": "Next now"
+  "Next now": "Next now",
+  "Power:": "Power:",
+  "Frequency:": "Frequency:",
+  "Temperature:": "Temperature:",
+  "VRAM:": "VRAM:",
+  "GPU clock:": "GPU clock:",
+  "Memory clock:": "Memory clock:",
+  "Not supported": "Not supported",
+  "Hardware metrics unavailable": "Hardware metrics unavailable"
 }
