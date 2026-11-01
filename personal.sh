@@ -86,6 +86,7 @@ sudo pacman -S --needed \
     zsh-syntax-highlighting \
     bat \
     btop \
+    fastfetch \
     fzf \
     zoxide \
     github-cli \

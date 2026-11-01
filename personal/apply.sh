@@ -67,7 +67,7 @@ fi
 say "== files"
 while IFS= read -r -d '' src; do
   rel=${src#"$SRC"/}
-  case $rel in .config/fastfetch/*) continue ;; esac   # linked, not copied (step 4)
+  case $rel in .config/fastfetch/*|Pictures/fastfetch/*) continue ;; esac   # linked, not copied (step 4)
   dst=$TARGET_HOME/$rel
   if [[ -f $dst ]] && cmp -s "$src" "$dst"; then
     say "same  $rel"

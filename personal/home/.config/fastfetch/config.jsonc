@@ -1,0 +1,94 @@
+// Based on Fastfetch official examples/13.jsonc (Catnap).
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "kitty-direct",
+    "source": "~/Pictures/fastfetch/*.png",
+    "width": 30,
+    "height": 15,
+    "padding": {
+      "top": 1,
+      "right": 3
+    }
+  },
+  "display": {
+    "separator": "  ",
+    "color": {
+      "keys": "#89b4fa",
+      "title": "#cba6f7"
+    }
+  },
+  "modules": [
+    {
+      "type": "custom",
+      "format": "{#94}╭─  CYRUS / SYSTEM ─────────────╮"
+    },
+    {
+      "type": "title",
+      "key": "    User",
+      "format": "{user-name}@{host-name}"
+    },
+    {
+      "type": "os",
+      "key": "    OS"
+    },
+    {
+      "type": "kernel",
+      "key": "    Kernel"
+    },
+    {
+      "type": "uptime",
+      "key": "  󰅐  Uptime"
+    },
+    {
+      "type": "packages",
+      "key": "  󰏖  Packages"
+    },
+    {
+      "type": "custom",
+      "format": "{#95}├─  DESKTOP ───────────────────┤"
+    },
+    {
+      "type": "wm",
+      "key": "    WM"
+    },
+    {
+      "type": "terminal",
+      "key": "    Terminal"
+    },
+    {
+      "type": "shell",
+      "key": "    Shell"
+    },
+    {
+      "type": "custom",
+      "format": "{#94}├─  HARDWARE ──────────────────┤"
+    },
+    {
+      "type": "cpu",
+      "key": "    CPU"
+    },
+    {
+      "type": "gpu",
+      "key": "  󰢮  GPU"
+    },
+    {
+      "type": "memory",
+      "key": "    Memory"
+    },
+    {
+      "type": "disk",
+      "key": "  󰋊  Disk",
+      "folders": "/"
+    },
+    {
+      "type": "custom",
+      "format": "{#95}╰─────────────────────────────╯"
+    },
+    {
+      "type": "colors",
+      "symbol": "circle",
+      "paddingLeft": 2
+    }
+  ]
+}
