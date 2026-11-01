@@ -109,6 +109,10 @@ Scope {
         function focus(): void {
             lockContext.shouldReFocus();
         }
+        // Lets an external watchdog restart the shell and lock again afterwards
+        function isLocked(): bool {
+            return GlobalStates.screenLocked;
+        }
     }
 
     GlobalShortcut {
