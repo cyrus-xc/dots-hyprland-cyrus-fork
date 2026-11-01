@@ -767,5 +767,6 @@
   "Turn off after (minutes)": "闲置多久后息屏（分钟）",
   "Times are measured from the last input. Turning off displays does not suspend the computer.": "时间从最后一次输入开始计算。息屏不会使计算机休眠。",
   "Lock and display settings applied.": "锁屏与息屏设置已应用。",
-  "Could not apply or read idle settings. Refresh and try again.": "无法读取或应用设置，请刷新后重试。"
+  "Could not apply or read idle settings. Refresh and try again.": "无法读取或应用设置，请刷新后重试。",
+  "All applications": "全部应用"
 }

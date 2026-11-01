@@ -59,6 +59,9 @@ Singleton {
     }))
 
     function fuzzyQuery(search: string): var { // Idk why list<DesktopEntry> doesn't work
+        if (search.trim().length === 0) {
+            return Array.from(root.list).sort((a, b) => a.name.localeCompare(b.name));
+        }
         if (root.sloppySearch) {
             const results = list.map(obj => ({
                 entry: obj,

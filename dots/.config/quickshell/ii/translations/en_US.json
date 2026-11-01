@@ -658,5 +658,6 @@
   "Turn off after (minutes)": "Turn off after (minutes)",
   "Times are measured from the last input. Turning off displays does not suspend the computer.": "Times are measured from the last input. Turning off displays does not suspend the computer.",
   "Lock and display settings applied.": "Lock and display settings applied.",
-  "Could not apply or read idle settings. Refresh and try again.": "Could not apply or read idle settings. Refresh and try again."
+  "Could not apply or read idle settings. Refresh and try again.": "Could not apply or read idle settings. Refresh and try again.",
+  "All applications": "All applications"
 }
