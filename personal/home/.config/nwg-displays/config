@@ -1,0 +1,9 @@
+{
+  "confirm-timeout": 15,
+  "view-scale": 0.1,
+  "snap-threshold": 10,
+  "indicator-timeout": 500,
+  "custom-mode": [],
+  "use-desc": false,
+  "profile-bound-wallpapers": true
+}

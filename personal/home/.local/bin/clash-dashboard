@@ -1,0 +1,3 @@
+#!/bin/sh
+. /home/pcd/.config/clash-proxy.sh
+exec google-chrome-stable --no-first-run --no-default-browser-check --user-data-dir=/home/pcd/.config/clash-dashboard-browser --app="http://127.0.0.1:9090/ui/#/setup?hostname=127.0.0.1&port=9090&secret=set-your-secret"

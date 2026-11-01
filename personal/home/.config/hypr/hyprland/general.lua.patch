@@ -1,5 +1,5 @@
---- a/hypr/hyprland/general.lua
-+++ b/hypr/hyprland/general.lua
+--- a/.config/hypr/hyprland/general.lua
++++ b/.config/hypr/hyprland/general.lua
 @@ -95,7 +95,7 @@
              enabled = true,
              range = 20,

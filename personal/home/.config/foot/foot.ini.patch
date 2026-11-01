@@ -1,0 +1,8 @@
+--- a/.config/foot/foot.ini
++++ b/.config/foot/foot.ini
+@@ -1,4 +1,4 @@
+-shell=fish
++shell=zsh
+ term=xterm-256color
+ 
+ title=foot

@@ -1,0 +1,11 @@
+--- "a/.local/share/konsole/Profile 1.profile"
++++ "b/.local/share/konsole/Profile 1.profile"
+@@ -2,7 +2,7 @@
+ ColorScheme=MaterialYou
+ 
+ [General]
+-Command=/bin/fish
++Command=/bin/zsh
+ Environment=COLORTERM=truecolor
+ Name=Profile 1
+ Parent=FALLBACK/

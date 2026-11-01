@@ -1,5 +1,5 @@
---- a/hypr/hyprland/variables.lua
-+++ b/hypr/hyprland/variables.lua
+--- a/.config/hypr/hyprland/variables.lua
++++ b/.config/hypr/hyprland/variables.lua
 @@ -7,13 +7,13 @@
  -- Apps
  -- PULL REQUESTS ADDING MORE WILL NOT BE ACCEPTED, CONFIG FOR YOURSELF

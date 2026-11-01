@@ -1,6 +1,6 @@
---- a/quickshell/ii/modules/common/Config.qml
-+++ b/quickshell/ii/modules/common/Config.qml
-@@ -151,13 +151,13 @@
+--- a/.config/quickshell/ii/modules/common/Config.qml
++++ b/.config/quickshell/ii/modules/common/Config.qml
+@@ -157,13 +157,13 @@
  
              property JsonObject apps: JsonObject {
                  property string bluetooth: "kcmshell6 kcm_bluetooth"

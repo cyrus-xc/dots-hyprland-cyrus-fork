@@ -30,7 +30,7 @@ unalias claude 2>/dev/null
 # packages that were not there before are appended to personal.sh (repo
 # packages to the pacman command, anything else as an "#AUR name" line).
 # pacman's arguments and exit code are passed through unchanged.
-PERSONAL_SH=/home/pcd/Development/dots-hyprland-cyrus-fork/personal.sh
+PERSONAL_SH="${CYRUS_DOTFILES_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/cyrus-dotfiles}/personal.sh"
 
 personal_pkg_snapshot() { command pacman -Qeq 2>/dev/null | sort }
 
@@ -89,3 +89,10 @@ sudo() {  # `sudo [options] pacman ...` goes through the same tracker
   command sudo "$@"
 }
 # <<< personal.sh package tracker <<<
+
+# >>> Cyrus Fastfetch >>>
+# Resolve paths from HOME/XDG; no machine-specific repository location.
+typeset -U path PATH
+path=("$HOME/.local/bin" $path)
+[[ ! -r "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/startup.zsh" ]] || source "${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/startup.zsh"
+# <<< Cyrus Fastfetch <<<
