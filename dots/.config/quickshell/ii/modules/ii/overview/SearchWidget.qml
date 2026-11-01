@@ -194,7 +194,9 @@ Item { // Wrapper
                 Connections {
                     target: LauncherSearch
                     function onResultsChanged() {
-                        resultModel.values = LauncherSearch.results.slice(0, root.typingResultLimit);
+                        const results = LauncherSearch.results ?? [];
+                        resultModel.values = root.searchingText.startsWith(Config.options.search.prefix.app)
+                            ? results : results.slice(0, root.typingResultLimit);
                         root.focusFirstItem();
                         debounceTimer.restart();
                     }

@@ -102,6 +102,24 @@ RowLayout {
     }
 
     IconToolbarButton {
+        id: allAppsButton
+        Layout.topMargin: 4
+        Layout.bottomMargin: 4
+        text: "apps"
+        toggled: root.searchPrefixType === SearchBar.SearchPrefixType.App
+        Accessible.name: Translation.tr("All applications")
+        onClicked: {
+            searchInput.text = Config.options.search.prefix.app;
+            LauncherSearch.query = searchInput.text;
+            searchInput.cursorPosition = searchInput.text.length;
+            root.forceFocus();
+        }
+        StyledToolTip {
+            text: Translation.tr("All applications")
+        }
+    }
+
+    IconToolbarButton {
         Layout.topMargin: 4
         Layout.bottomMargin: 4
         onClicked: {

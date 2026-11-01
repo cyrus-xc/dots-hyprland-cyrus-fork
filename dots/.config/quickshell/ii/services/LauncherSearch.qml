@@ -227,7 +227,8 @@ Singleton {
         }
 
         ////////////////// Init ///////////////////
-        nonAppResultsTimer.restart();
+        if (!root.query.startsWith(Config.options.search.prefix.app))
+            nonAppResultsTimer.restart();
         const mathResultObject = resultComp.createObject(null, {
             name: root.mathResult,
             verb: Translation.tr("Copy"),
@@ -275,6 +276,10 @@ Singleton {
                 })
             });
         });
+        // An app-prefixed query also serves as the complete application browser.
+        if (root.query.startsWith(Config.options.search.prefix.app))
+            return appResultObjects;
+
         const commandResultObject = resultComp.createObject(null, {
             name: StringUtils.cleanPrefix(root.query, Config.options.search.prefix.shellCommand).replace("file://", ""),
             verb: Translation.tr("Run"),
