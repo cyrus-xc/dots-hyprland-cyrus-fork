@@ -635,5 +635,6 @@
   "Scale: 1.00 = 100%, 1.25 = 125%, 1.50 = 150%, 2.00 = 200%. A larger scale makes text and windows larger.": "Scale: 1.00 = 100%, 1.25 = 125%, 1.50 = 150%, 2.00 = 200%. A larger scale makes text and windows larger.",
   "Aspect ratio is determined by resolution. For example, 1920×1080 is 16:9. Use your display's native aspect ratio where possible.": "Aspect ratio is determined by resolution. For example, 1920×1080 is 16:9. Use your display's native aspect ratio where possible.",
   "Display layout: Drag the display rectangles to reposition them. You can also configure rotation, mirroring and workspace assignments.": "Display layout: Drag the display rectangles to reposition them. You can also configure rotation, mirroring and workspace assignments.",
-  "Confirm after applying changes. If you do not confirm within %1 seconds, the previous configuration is restored. Confirmed settings are kept for your next login.": "Confirm after applying changes. If you do not confirm within %1 seconds, the previous configuration is restored. Confirmed settings are kept for your next login."
+  "Confirm after applying changes. If you do not confirm within %1 seconds, the previous configuration is restored. Confirmed settings are kept for your next login.": "Confirm after applying changes. If you do not confirm within %1 seconds, the previous configuration is restored. Confirmed settings are kept for your next login.",
+  "Tokyo Night": "Tokyo Night"
 }

@@ -744,5 +744,6 @@
   "Scale: 1.00 = 100%, 1.25 = 125%, 1.50 = 150%, 2.00 = 200%. A larger scale makes text and windows larger.": "缩放尺寸：Scale 1.00 = 100%，1.25 = 125%，1.50 = 150%，2.00 = 200%。缩放越大，文字和窗口越大。",
   "Aspect ratio is determined by resolution. For example, 1920×1080 is 16:9. Use your display's native aspect ratio where possible.": "屏幕比例：由分辨率决定，例如 1920×1080 是 16:9；建议使用显示器原生比例。",
   "Display layout: Drag the display rectangles to reposition them. You can also configure rotation, mirroring and workspace assignments.": "多屏排布：拖动屏幕矩形调整位置；也可设置旋转、镜像，以及工作区对应的显示器。",
-  "Confirm after applying changes. If you do not confirm within %1 seconds, the previous configuration is restored. Confirmed settings are kept for your next login.": "应用后请确认保留；%1 秒内未确认会恢复之前的配置。确认后的设置会在下次登录保留。"
+  "Confirm after applying changes. If you do not confirm within %1 seconds, the previous configuration is restored. Confirmed settings are kept for your next login.": "应用后请确认保留；%1 秒内未确认会恢复之前的配置。确认后的设置会在下次登录保留。",
+  "Tokyo Night": "Tokyo Night"
 }
