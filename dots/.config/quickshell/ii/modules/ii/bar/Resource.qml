@@ -9,6 +9,8 @@ Item {
     required property double percentage
     property int warningThreshold: 100
     property bool shown: true
+    property string displayLabel: ""
+    property bool dataAvailable: true
     clip: true
     visible: width > 0 && height > 0
     implicitWidth: resourceRowLayout.x < 0 ? 0 : resourceRowLayout.implicitWidth
@@ -49,6 +51,13 @@ Item {
             }
         }
 
+        StyledText {
+            visible: root.displayLabel.length > 0
+            text: root.displayLabel
+            font.pixelSize: Appearance.font.pixelSize.small
+            color: Appearance.colors.colOnLayer1
+        }
+
         Item {
             Layout.alignment: Qt.AlignVCenter
             implicitWidth: fullPercentageTextMetrics.width
@@ -65,7 +74,7 @@ Item {
                 anchors.centerIn: parent
                 color: Appearance.colors.colOnLayer1
                 font.pixelSize: Appearance.font.pixelSize.small
-                text: `${Math.round(percentage * 100).toString()}`
+                text: root.dataAvailable ? `${Math.round(percentage * 100).toString()}` : "—"
             }
         }
 

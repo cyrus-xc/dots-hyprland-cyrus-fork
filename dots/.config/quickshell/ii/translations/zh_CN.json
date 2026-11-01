@@ -720,5 +720,13 @@
   "Move left": "左移",
   "Pin to Start": "固定到“开始”屏幕",
   "Pin": "固定",
-  "Unpin": "取消固定"
+  "Unpin": "取消固定",
+  "Power:": "功耗：",
+  "Frequency:": "频率：",
+  "Temperature:": "温度：",
+  "VRAM:": "显存：",
+  "GPU clock:": "核心频率：",
+  "Memory clock:": "显存频率：",
+  "Not supported": "硬件不支持",
+  "Hardware metrics unavailable": "硬件监控暂不可用"
 }

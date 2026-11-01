@@ -21,6 +21,9 @@ Singleton {
     property real swapUsedPercentage: swapTotal > 0 ? (swapUsed / swapTotal) : 0
     property real cpuUsage: 0
     property var previousCpuStats
+    property var cpuPackages: []
+    property var gpus: []
+    property bool hardwareAvailable: false
 
     property string maxAvailableMemoryString: kbToGbString(ResourceUsage.memoryTotal)
     property string maxAvailableSwapString: kbToGbString(ResourceUsage.swapTotal)
@@ -67,6 +70,7 @@ Singleton {
             // Reload files
             fileMeminfo.reload()
             fileStat.reload()
+            hardwareFile.reload()
 
             // Parse memory and swap usage
             const textMeminfo = fileMeminfo.text()
@@ -99,6 +103,28 @@ Singleton {
 
 	FileView { id: fileMeminfo; path: "/proc/meminfo" }
     FileView { id: fileStat; path: "/proc/stat" }
+
+    FileView {
+        id: hardwareFile
+        path: "/run/end4-hardware/status.json"
+        onLoaded: {
+            try {
+                const data = JSON.parse(hardwareFile.text());
+                root.hardwareAvailable = data.schemaVersion === 1 && Date.now()/1000 - data.timestamp < 15;
+                root.cpuPackages = root.hardwareAvailable ? data.cpuPackages : [];
+                root.gpus = root.hardwareAvailable ? data.gpus : [];
+            } catch (e) {
+                root.hardwareAvailable = false;
+                root.cpuPackages = [];
+                root.gpus = [];
+            }
+        }
+        onLoadFailed: {
+            root.hardwareAvailable = false;
+            root.cpuPackages = [];
+            root.gpus = [];
+        }
+    }
 
     Process {
         id: findCpuMaxFreqProc
