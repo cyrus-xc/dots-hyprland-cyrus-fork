@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Generate thumbnails for files using ImageMagick, following Freedesktop spec
+# Videos get a frame extracted with ffmpeg (when available) instead.
 # Usage:
 #   ./generate-thumbnails-magick.sh --file <path>
 #   ./generate-thumbnails-magick.sh --directory <path>
@@ -43,13 +44,34 @@ urlencode() {
     echo "$encoded"
 }
 
+is_video() {
+    case "${1,,}" in
+        *.mp4|*.webm|*.mkv|*.avi|*.mov) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+# One frame from a video, scaled to fit the thumbnail size. Written to a temp file first so a
+# failed run never leaves a broken thumbnail behind.
+generate_video_thumbnail() {
+    local src="$1" out="$2"
+    command -v ffmpeg &>/dev/null || return 0
+    local tmp="$out.tmp.png"
+    local filter="scale=${THUMBNAIL_SIZE}:${THUMBNAIL_SIZE}:force_original_aspect_ratio=decrease"
+    # Prefer a frame 1 s in (the first frame is often black); fall back to the first frame
+    ffmpeg -y -loglevel error -ss 1 -i "$src" -frames:v 1 -vf "$filter" "$tmp" 2>/dev/null \
+        || ffmpeg -y -loglevel error -i "$src" -frames:v 1 -vf "$filter" "$tmp" 2>/dev/null \
+        || { rm -f "$tmp"; return 0; }
+    mv -f "$tmp" "$out"
+}
+
 generate_thumbnail() {
     local src="$1"
     local abs_path
     abs_path="$(realpath "$src")"
-    # Skip files with multiple frames (GIFs, videos, etc.)
+    # Skip animated images (multiple frames)
     case "${abs_path,,}" in
-        *.gif|*.mp4|*.webm|*.mkv|*.avi|*.mov)
+        *.gif)
             return
             ;;
     esac
@@ -62,6 +84,10 @@ generate_thumbnail() {
     local out="$CACHE_DIR/$hash.png"
     mkdir -p "$CACHE_DIR"
     if [ -f "$out" ]; then
+        return
+    fi
+    if is_video "$abs_path"; then
+        generate_video_thumbnail "$abs_path" "$out"
         return
     fi
     magick "$abs_path" -resize "${THUMBNAIL_SIZE}x${THUMBNAIL_SIZE}" "$out"

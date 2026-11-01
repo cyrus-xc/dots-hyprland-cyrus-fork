@@ -160,10 +160,12 @@ quickshell, home_attrs, ... }:
 
 
       ### illogical-impulse-widgets
+      ffmpeg #ffmpeg
       fuzzel #fuzzel
       glib #glib2
       imagemagick #imagemagick
       hypridle #hypridle
+      mpvpaper #mpvpaper
       #hyprlock (Should not be installed via Nix; TODO: should install via nix in future when authentication problem fixed)
       hyprpicker #hyprpicker
       songrec #songrec

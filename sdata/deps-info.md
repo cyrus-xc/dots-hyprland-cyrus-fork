@@ -179,6 +179,10 @@ Tips:
 - `imagemagick`
   - Provides executable: `magick`
   - Used in Quickshell config.
+- `ffmpeg`
+  - Used in `quickshell/ii/scripts/colors/switchwall.sh` and the thumbnail script to extract a frame from video wallpapers.
+- `mpvpaper`
+  - Plays video wallpapers (mp4/mkv/webm/mov/avi), started by `switchwall.sh` and restored on login by `hypr/custom/scripts/__restore_video_wallpaper.sh`.
 - `hypridle`
   - Used for loginctl to lock session.
 - `hyprlock`

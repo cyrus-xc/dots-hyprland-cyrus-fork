@@ -10,7 +10,8 @@ MouseArea {
     id: root
     required property var fileModelData
     property bool isDirectory: fileModelData.fileIsDir
-    property bool useThumbnail: Images.isValidImageByName(fileModelData.fileName)
+    property bool isVideo: Images.isVideoByName(fileModelData.fileName)
+    property bool useThumbnail: Images.isValidImageByName(fileModelData.fileName) || isVideo
 
     property alias colBackground: background.color
     property alias colText: wallpaperItemName.color
@@ -100,6 +101,26 @@ MouseArea {
                     anchors.fill: parent
                     sourceComponent: DirectoryIcon {
                         fileModelData: root.fileModelData
+                    }
+                }
+
+                // Marks videos, which look like images once they have a thumbnail
+                Rectangle {
+                    visible: root.isVideo
+                    anchors {
+                        right: parent.right
+                        bottom: parent.bottom
+                        margins: 6
+                    }
+                    implicitWidth: 24
+                    implicitHeight: 24
+                    radius: Appearance.rounding.full
+                    color: Appearance.colors.colLayer2
+                    MaterialSymbol {
+                        anchors.centerIn: parent
+                        text: "movie"
+                        iconSize: Appearance.font.pixelSize.normal
+                        color: Appearance.colors.colOnLayer2
                     }
                 }
             }

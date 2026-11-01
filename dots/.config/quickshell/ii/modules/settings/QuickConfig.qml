@@ -72,7 +72,7 @@ ContentPage {
                     id: wallpaperPreview
                     anchors.fill: parent
                     fillMode: Image.PreserveAspectCrop
-                    source: Config.options.background.wallpaperPath
+                    source: Images.wallpaperStillPath(Config.options.background.wallpaperPath, Config.options.background.thumbnailPath)
                     cache: false
                     layer.enabled: true
                     layer.effect: OpacityMask {

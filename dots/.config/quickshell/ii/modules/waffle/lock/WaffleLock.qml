@@ -46,7 +46,7 @@ LockScreen {
                     openAnim.restart();
                 }
             }
-            source: Config.options.background.wallpaperPath
+            source: Images.wallpaperStillPath(Config.options.background.wallpaperPath, Config.options.background.thumbnailPath)
             fillMode: Image.PreserveAspectCrop
 
             PropertyAnimation {
