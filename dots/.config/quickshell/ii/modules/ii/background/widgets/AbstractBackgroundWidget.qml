@@ -49,8 +49,8 @@ AbstractWidget {
         return onNormalBackground ? Appearance.colors.colOnLayer0 : adaptiveColor;
     }
 
-    property bool wallpaperIsVideo: Config.options.background.wallpaperPath.endsWith(".mp4") || Config.options.background.wallpaperPath.endsWith(".webm") || Config.options.background.wallpaperPath.endsWith(".mkv") || Config.options.background.wallpaperPath.endsWith(".avi") || Config.options.background.wallpaperPath.endsWith(".mov")
-    property string wallpaperPath: wallpaperIsVideo ? Config.options.background.thumbnailPath : Config.options.background.wallpaperPath
+    property bool wallpaperIsVideo: Images.isVideoByName(Config.options.background.wallpaperPath)
+    property string wallpaperPath: Images.wallpaperStillPath(Config.options.background.wallpaperPath, Config.options.background.thumbnailPath)
     
     onWallpaperPathChanged: refreshPlacementIfNeeded()
     onPlacementStrategyChanged: refreshPlacementIfNeeded()

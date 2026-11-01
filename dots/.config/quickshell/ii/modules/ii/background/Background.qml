@@ -40,8 +40,10 @@ Variants {
         property int workspaceChunkSize: Config?.options.bar.workspaces.shown ?? 10
         property int totalWorkspaces: Math.ceil(lastWorkspaceId / workspaceChunkSize) * workspaceChunkSize
         // Wallpaper
-        property bool wallpaperIsVideo: Config.options.background.wallpaperPath.endsWith(".mp4") || Config.options.background.wallpaperPath.endsWith(".webm") || Config.options.background.wallpaperPath.endsWith(".mkv") || Config.options.background.wallpaperPath.endsWith(".avi") || Config.options.background.wallpaperPath.endsWith(".mov")
-        property string wallpaperPath: wallpaperIsVideo ? Config.options.background.thumbnailPath : Config.options.background.wallpaperPath
+        // Video wallpapers are played by mpvpaper (started from switchwall.sh); here only the
+        // extracted frame is used, for colors and sizing, and the still image stays hidden
+        property bool wallpaperIsVideo: Images.isVideoByName(Config.options.background.wallpaperPath)
+        property string wallpaperPath: Images.wallpaperStillPath(Config.options.background.wallpaperPath, Config.options.background.thumbnailPath)
         property bool wallpaperSafetyTriggered: {
             const enabled = Config.options.workSafety.enable.wallpaper;
             const sensitiveWallpaper = (CF.StringUtils.stringListContainsSubstring(wallpaperPath.toLowerCase(), Config.options.workSafety.triggerCondition.fileKeywords));
