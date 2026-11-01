@@ -212,6 +212,10 @@ ContentPage {
                 {
                     "value": "scheme-tonal-spot",
                     "displayName": Translation.tr("Tonal Spot")
+                },
+                {
+                    "value": "tokyo-night",
+                    "displayName": Translation.tr("Tokyo Night")
                 }
             ]
         }

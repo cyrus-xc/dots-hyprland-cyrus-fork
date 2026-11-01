@@ -168,6 +168,16 @@ switch() {
     color_flag="$4"
     color="$5"
 
+    # Fixed palettes: still switch the wallpaper, but seed colors from the palette
+    # instead of the image and overlay the exact palette afterwards
+    fixed_palette=""
+    if [[ "$type_flag" == "tokyo-night" ]]; then
+        fixed_palette="tokyo-night"
+        fixed_palette_seed="#7AA2F7"
+        type_flag="scheme-tonal-spot"
+        mode_flag="dark" # Tokyo Night is a dark-only palette
+    fi
+
     # Start Gemini auto-categorization if enabled
     aiStylingEnabled=$(jq -r '.background.widgets.clock.cookie.aiStyling' "$SHELL_CONFIG_FILE")
     if [[ "$aiStylingEnabled" == "true" ]]; then
@@ -259,6 +269,11 @@ switch() {
         fi
     fi
 
+    if [[ -n "$fixed_palette" ]]; then
+        matugen_args=(--source-color-index 0 color hex "$fixed_palette_seed")
+        generate_colors_material_args=(--color "$fixed_palette_seed")
+    fi
+
     # Determine mode if not set
     if [[ -z "$mode_flag" ]]; then
         current_mode=$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null | tr -d "'")
@@ -308,6 +323,11 @@ switch() {
     python3 "$SCRIPT_DIR/generate_colors_material.py" "${generate_colors_material_args[@]}" \
         > "$STATE_DIR"/user/generated/material_colors.scss
     deactivate
+    if [[ "$fixed_palette" == "tokyo-night" ]]; then
+        python3 "$SCRIPT_DIR/tokyo_night.py" \
+            --scss "$STATE_DIR/user/generated/material_colors.scss" \
+            --json "$STATE_DIR/user/generated/colors.json"
+    fi
     "$SCRIPT_DIR"/applycolor.sh
 
     # Pass screen width, height, and wallpaper path to post_process
@@ -395,7 +415,7 @@ main() {
     fi
 
     # Validate type_flag (allow 'auto' as well)
-    allowed_types=(scheme-content scheme-expressive scheme-fidelity scheme-fruit-salad scheme-monochrome scheme-neutral scheme-rainbow scheme-tonal-spot auto)
+    allowed_types=(scheme-content scheme-expressive scheme-fidelity scheme-fruit-salad scheme-monochrome scheme-neutral scheme-rainbow scheme-tonal-spot tokyo-night auto)
     valid_type=0
     for t in "${allowed_types[@]}"; do
         if [[ "$type_flag" == "$t" ]]; then
