@@ -1,0 +1,29 @@
+--- a/quickshell/ii/translations/zh_CN.json
++++ b/quickshell/ii/translations/zh_CN.json
+@@ -720,5 +720,23 @@
+   "Move left": "左移",
+   "Pin to Start": "固定到“开始”屏幕",
+   "Pin": "固定",
+-  "Unpin": "取消固定"
+-}
+\ No newline at end of file
++  "Unpin": "取消固定",
++  "Refresh": "刷新",
++  "Lock screen and display": "锁屏与息屏",
++  "Automatic screen lock": "自动锁屏",
++  "Lock after (minutes)": "闲置多久后锁屏（分钟）",
++  "Automatically turn off displays": "自动息屏",
++  "Turn off after (minutes)": "闲置多久后息屏（分钟）",
++  "Times are measured from the last input. Turning off displays does not suspend the computer.": "时间从最后一次输入开始计算。息屏不会使计算机休眠。",
++  "Lock and display settings applied.": "锁屏与息屏设置已应用。",
++  "Could not apply or read idle settings. Refresh and try again.": "无法读取或应用设置，请刷新后重试。",
++  "Power:": "功耗：",
++  "Frequency:": "频率：",
++  "Temperature:": "温度：",
++  "VRAM:": "显存：",
++  "GPU clock:": "核心频率：",
++  "Memory clock:": "显存频率：",
++  "Not supported": "硬件不支持",
++  "Hardware metrics unavailable": "硬件监控暂不可用",
++  "All applications": "全部应用"
++}

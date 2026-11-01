@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Sunshine global prep command: make the desktop ready for a Moonlight client.
+# Turns the display back on (hypridle may have switched it off), makes sure
+# quickshell is running, and gives the lock screen keyboard focus.
+
+if [[ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]]; then
+    HYPRLAND_INSTANCE_SIGNATURE=$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -1)
+    export HYPRLAND_INSTANCE_SIGNATURE
+fi
+
+hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })' >/dev/null
+"$HOME/.local/bin/qs-watchdog"
+hyprctl dispatch 'hl.dsp.global("quickshell:lockFocus")' >/dev/null
+exit 0

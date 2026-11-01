@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# Restart quickshell (end4 "ii" config) when it leaks too much memory or fds.
+# If the screen was locked, lock it again right after the restart so the
+# session never shows Hyprland's fallback lock screen for long.
+# Run by qs-watchdog.timer.
+#
+#   qs-watchdog            check once, restart if over the limits
+#   qs-watchdog --force    restart now (keeps the lock state)
+
+MEM_LIMIT_MB=${QS_WATCHDOG_MEM_MB:-1024}
+FD_LIMIT=${QS_WATCHDOG_FDS:-4096}
+LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/qs-watchdog"
+LOG="$LOG_DIR/log"
+mkdir -p "$LOG_DIR"
+
+log() { echo "$(date -Iseconds) $*" | tee -a "$LOG"; }
+
+# hyprctl needs the Hyprland instance; fall back to the newest one
+if [[ -z "$HYPRLAND_INSTANCE_SIGNATURE" ]]; then
+    HYPRLAND_INSTANCE_SIGNATURE=$(ls -t "$XDG_RUNTIME_DIR/hypr" 2>/dev/null | head -1)
+    export HYPRLAND_INSTANCE_SIGNATURE
+fi
+if ! hyprctl version >/dev/null 2>&1; then
+    exit 0 # No graphical session, nothing to watch
+fi
+
+qs_pid() { pgrep -f '^qs -c ii$' | head -1; }
+
+start_qs() {
+    # Launch through Hyprland so quickshell gets the session environment
+    hyprctl dispatch 'hl.dsp.exec_cmd("qs -c ii")' >/dev/null
+    for _ in $(seq 30); do
+        sleep 1
+        qs -c ii ipc call lock isLocked >/dev/null 2>&1 && [[ -n "$(qs_pid)" ]] && return 0
+    done
+    return 1
+}
+
+restart_qs() {
+    local reason=$1 pid locked
+    pid=$(qs_pid)
+    locked=$(qs -c ii ipc call lock isLocked 2>/dev/null)
+    # Unknown state: lock again to be safe
+    [[ "$locked" != "false" ]] && locked=true
+
+    kill "$pid" 2>/dev/null
+    for _ in $(seq 10); do kill -0 "$pid" 2>/dev/null || break; sleep 1; done
+    kill -9 "$pid" 2>/dev/null
+
+    if ! start_qs; then
+        log "ERROR restart failed ($reason)"
+        return 1
+    fi
+    if [[ "$locked" == "true" ]]; then
+        qs -c ii ipc call lock activate >/dev/null
+    fi
+    log "restarted ($reason) locked=$locked new_pid=$(qs_pid)"
+}
+
+pid=$(qs_pid)
+if [[ -z "$pid" ]]; then
+    if start_qs; then
+        # It may have crashed while locked; the session stays locked until a
+        # new client takes the lock, so take it
+        qs -c ii ipc call lock activate >/dev/null
+        log "quickshell was not running, started it (locked=true) new_pid=$(qs_pid)"
+    else
+        log "ERROR quickshell was not running and could not be started"
+    fi
+    exit 0
+fi
+
+# Private memory only: RSS also counts ~400 MB of shared Qt/NVIDIA libraries,
+# which would put a fresh shell over the limit already
+mem_mb=$(awk '/^Private_(Clean|Dirty):/ { kb += $2 } END { print int(kb / 1024) }' "/proc/$pid/smaps_rollup")
+fds=$(ls "/proc/$pid/fd" 2>/dev/null | wc -l)
+
+if [[ "$1" == "--force" ]]; then
+    restart_qs "manual, private=${mem_mb}MB fds=$fds"
+elif (( mem_mb > MEM_LIMIT_MB )); then
+    restart_qs "private=${mem_mb}MB > ${MEM_LIMIT_MB}MB, fds=$fds"
+elif (( fds > FD_LIMIT )); then
+    restart_qs "fds=$fds > $FD_LIMIT, private=${mem_mb}MB"
+fi

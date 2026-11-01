@@ -1,0 +1,8 @@
+[Unit]
+Description=Restart quickshell when it leaks memory or file descriptors
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/qs-watchdog
+Environment=QS_WATCHDOG_MEM_MB=1024
+Environment=QS_WATCHDOG_FDS=4096
