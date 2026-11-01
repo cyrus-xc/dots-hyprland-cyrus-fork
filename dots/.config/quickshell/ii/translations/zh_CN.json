@@ -720,5 +720,11 @@
   "Move left": "左移",
   "Pin to Start": "固定到“开始”屏幕",
   "Pin": "固定",
-  "Unpin": "取消固定"
+  "Unpin": "取消固定",
+  "Auto-switch wallpaper": "自动切换壁纸",
+  "Shuffle": "随机",
+  "Off: go through the folder in name order": "关闭时按文件名顺序轮换",
+  "Interval (minutes)": "间隔（分钟）",
+  "Folder (empty: %1)": "文件夹（留空则为 %1）",
+  "Next now": "立即下一张"
 }
