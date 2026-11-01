@@ -73,5 +73,5 @@
 - `alias pacman='personal_pacman command pacman'`（函数名不带下划线前缀：Claude Code 的 shell 快照不会收录 `_` 开头的函数，否则在它的终端里 pacman 会报 command not found），以及一个 `sudo` 函数，把 `sudo [选项] pacman …` 也送进同一个包装。
 - 包装在运行前后各取一次 `pacman -Qeq`，新增的显式安装包：在同步仓库里能查到的追加到 `personal.sh` 那条命令末尾，查不到的追加成 `#AUR 名字` 行。已列出的不重复加。
 - pacman 的参数原样传递，退出码原样返回。`personal.sh` 不存在或不可写时什么都不做。
-- 直接用 `yay` 安装的包不经过这个函数，不会被记录。
+- `yay` 同样包装：`personal_yay() { personal_pacman command yay "$@" }` 加 `alias yay='personal_yay'`，走同一套比对和分类逻辑（`pacman -Si` 查得到的是仓库包，否则记为 `#AUR`）。只搜索、只升级、卸载等操作不会产生新的显式包，自然原样透传。
 - 路径写死为 `/home/pcd/Development/dots-hyprland-cyrus-fork/personal.sh`，要求那个检出在 main 分支上。

@@ -29,6 +29,7 @@
 #AUR clash-verge-rev-bin
 #AUR google-chrome
 #AUR mihomo-bin
+#AUR mpvpaper
 #AUR nvidia-580xx-dkms
 #AUR nvidia-580xx-utils
 #AUR sunshine
