@@ -130,6 +130,151 @@ ContentPage {
     }
 
     ContentSection {
+        id: root
+        icon: "lock_clock"
+        title: Translation.tr("Lock screen and display")
+        property bool loaded: false
+        property string revision: ""
+        property int feedback: 0
+        property bool saving: false
+        readonly property bool busy: settingsProcess.running
+    
+        function refresh() {
+            if (root.busy) return;
+            root.saving = false;
+            root.feedback = 0;
+            settingsProcess.command = ["python3", Quickshell.shellPath("scripts/settings/idle-settings.py"), "status"];
+            settingsProcess.running = true;
+        }
+        function apply() {
+            if (!root.loaded || root.busy) return;
+            root.saving = true;
+            root.feedback = 0;
+            settingsProcess.command = ["python3", Quickshell.shellPath("scripts/settings/idle-settings.py"), "apply",
+                root.revision, lockEnabled.checked ? "1" : "0", String(lockMinutes.value),
+                displayEnabled.checked ? "1" : "0", String(displayMinutes.value)];
+            settingsProcess.running = true;
+        }
+        Component.onCompleted: refresh()
+    
+        component TimeoutRow: RowLayout {
+            property string text
+            property alias value: minutes.value
+            Layout.fillWidth: true
+            Layout.leftMargin: 8
+            Layout.rightMargin: 8
+            spacing: 10
+            MaterialSymbol {
+                text: "timer"
+                iconSize: Appearance.font.pixelSize.larger
+                opacity: parent.enabled ? 1 : 0.4
+            }
+            StyledText {
+                Layout.fillWidth: true
+                text: parent.text
+                color: Appearance.colors.colOnSecondaryContainer
+                opacity: parent.enabled ? 1 : 0.4
+            }
+            StyledSpinBox {
+                id: minutes
+                from: 1
+                to: 1440
+                implicitWidth: 140
+                implicitHeight: baseHeight
+                leftPadding: baseHeight
+                rightPadding: baseHeight
+                topPadding: 0
+                bottomPadding: 0
+            }
+        }
+    
+        Process {
+            id: settingsProcess
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    try {
+                        const state = JSON.parse(text);
+                        if (!state.ok) throw new Error("Idle settings unavailable");
+                        lockEnabled.checked = state.lockEnabled;
+                        lockMinutes.value = state.lockMinutes;
+                        displayEnabled.checked = state.displayEnabled;
+                        displayMinutes.value = state.displayMinutes;
+                        root.revision = state.revision;
+                        root.loaded = true;
+                        root.feedback = root.saving ? 1 : 0;
+                    } catch (e) { root.feedback = 2; }
+                }
+            }
+            onExited: (code, status) => { if (code !== 0) root.feedback = 2; }
+        }
+    
+        ConfigSwitch {
+            id: lockEnabled
+            objectName: "idleLockEnabled"
+            buttonIcon: "lock"
+            text: Translation.tr("Automatic screen lock")
+            enabled: root.loaded && !root.busy
+        }
+        TimeoutRow {
+            id: lockMinutes
+            objectName: "idleLockMinutes"
+            text: Translation.tr("Lock after (minutes)")
+            value: 5
+            enabled: root.loaded && lockEnabled.checked && !root.busy
+            Layout.fillWidth: true
+        }
+        ConfigSwitch {
+            id: displayEnabled
+            objectName: "idleDisplayEnabled"
+            buttonIcon: "desktop_windows"
+            text: Translation.tr("Automatically turn off displays")
+            enabled: root.loaded && !root.busy
+        }
+        TimeoutRow {
+            id: displayMinutes
+            objectName: "idleDisplayMinutes"
+            text: Translation.tr("Turn off after (minutes)")
+            value: 10
+            enabled: root.loaded && displayEnabled.checked && !root.busy
+            Layout.fillWidth: true
+        }
+        StyledText {
+            Layout.fillWidth: true
+            wrapMode: Text.WordWrap
+            font.pixelSize: Appearance.font.pixelSize.small
+            color: Appearance.colors.colSubtext
+            text: Translation.tr("Times are measured from the last input. Turning off displays does not suspend the computer.")
+        }
+        RowLayout {
+            Layout.fillWidth: true
+            Item { Layout.fillWidth: true }
+            RippleButtonWithIcon {
+                materialIcon: "refresh"
+                mainText: Translation.tr("Refresh")
+                enabled: !root.busy
+                onClicked: root.refresh()
+            }
+            RippleButtonWithIcon {
+                objectName: "idleApply"
+                materialIcon: "check"
+                mainText: Translation.tr("Apply")
+                enabled: root.loaded && !root.busy
+                onClicked: root.apply()
+            }
+        }
+        StyledText {
+            Layout.fillWidth: true
+            visible: root.feedback !== 0
+            wrapMode: Text.WordWrap
+            color: root.feedback === 1 ? Appearance.colors.colSubtext : Appearance.colors.colError
+            text: root.feedback === 1
+                ? Translation.tr("Lock and display settings applied.")
+                : Translation.tr("Could not apply or read idle settings. Refresh and try again.")
+        }
+    }
+    
+
+    ContentSection {
         icon: "language"
         title: Translation.tr("Language")
 

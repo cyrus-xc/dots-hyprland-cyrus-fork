@@ -650,5 +650,13 @@
   "GPU clock:": "GPU clock:",
   "Memory clock:": "Memory clock:",
   "Not supported": "Not supported",
-  "Hardware metrics unavailable": "Hardware metrics unavailable"
+  "Hardware metrics unavailable": "Hardware metrics unavailable",
+  "Lock screen and display": "Lock screen and display",
+  "Automatic screen lock": "Automatic screen lock",
+  "Lock after (minutes)": "Lock after (minutes)",
+  "Automatically turn off displays": "Automatically turn off displays",
+  "Turn off after (minutes)": "Turn off after (minutes)",
+  "Times are measured from the last input. Turning off displays does not suspend the computer.": "Times are measured from the last input. Turning off displays does not suspend the computer.",
+  "Lock and display settings applied.": "Lock and display settings applied.",
+  "Could not apply or read idle settings. Refresh and try again.": "Could not apply or read idle settings. Refresh and try again."
 }
