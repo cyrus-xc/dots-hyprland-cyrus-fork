@@ -70,7 +70,7 @@
 
 `.zshrc` 末尾的「personal.sh package tracker」段：
 
-- `alias pacman='_personal_pacman command pacman'`，以及一个 `sudo` 函数，把 `sudo [选项] pacman …` 也送进同一个包装。
+- `alias pacman='personal_pacman command pacman'`（函数名不带下划线前缀：Claude Code 的 shell 快照不会收录 `_` 开头的函数，否则在它的终端里 pacman 会报 command not found），以及一个 `sudo` 函数，把 `sudo [选项] pacman …` 也送进同一个包装。
 - 包装在运行前后各取一次 `pacman -Qeq`，新增的显式安装包：在同步仓库里能查到的追加到 `personal.sh` 那条命令末尾，查不到的追加成 `#AUR 名字` 行。已列出的不重复加。
 - pacman 的参数原样传递，退出码原样返回。`personal.sh` 不存在或不可写时什么都不做。
 - 直接用 `yay` 安装的包不经过这个函数，不会被记录。

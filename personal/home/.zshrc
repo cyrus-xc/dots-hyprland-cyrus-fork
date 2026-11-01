@@ -32,9 +32,9 @@ unalias claude 2>/dev/null
 # pacman's arguments and exit code are passed through unchanged.
 PERSONAL_SH=/home/pcd/Development/dots-hyprland-cyrus-fork/personal.sh
 
-_personal_pkg_snapshot() { command pacman -Qeq 2>/dev/null | sort }
+personal_pkg_snapshot() { command pacman -Qeq 2>/dev/null | sort }
 
-_personal_pkg_record() {  # $1 = before, $2 = after (sorted package lists)
+personal_pkg_record() {  # $1 = before, $2 = after (sorted package lists)
   local pkg tmp
   [[ -w $PERSONAL_SH ]] || return 0
   for pkg in ${(f)"$(comm -13 <(print -r -- "$1") <(print -r -- "$2"))"}; do
@@ -65,23 +65,23 @@ _personal_pkg_record() {  # $1 = before, $2 = after (sorted package lists)
   done
 }
 
-_personal_pacman() {  # run "$@" (pacman, or sudo pacman) and record new explicit packages
+personal_pacman() {  # run "$@" (pacman, or sudo pacman) and record new explicit packages
   local before after rc
-  before=$(_personal_pkg_snapshot)
+  before=$(personal_pkg_snapshot)
   "$@"
   rc=$?
-  after=$(_personal_pkg_snapshot)
-  _personal_pkg_record "$before" "$after"
+  after=$(personal_pkg_snapshot)
+  personal_pkg_record "$before" "$after"
   return $rc
 }
-alias pacman='_personal_pacman command pacman'
+alias pacman='personal_pacman command pacman'
 
 sudo() {  # `sudo [options] pacman ...` goes through the same tracker
   local arg
   for arg in "$@"; do
     [[ $arg == -* ]] && continue
     if [[ $arg == pacman ]]; then
-      _personal_pacman command sudo "$@"
+      personal_pacman command sudo "$@"
       return
     fi
     break
